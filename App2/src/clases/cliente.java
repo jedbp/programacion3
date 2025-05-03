@@ -87,7 +87,7 @@ public class cliente {
     public int guardarCliente(String nombre,String apellido,String telefono, String email, String username, String clave) throws SQLException {
         Conector db = new Conector();
         db.conectar();
-        String query = "INSERT INTO clientes (nombre,apellido,tetelfono, email, username, clave) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO clientes (nombre,apellido,telefono, email, username, clave) VALUES (?, ?, ?, ?, ?, ?)";
         return db.executeUpdate(query, nombre,apellido,telefono, email, username, clave);
     }
 

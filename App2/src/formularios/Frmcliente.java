@@ -21,7 +21,7 @@ public class Frmcliente extends javax.swing.JFrame {
      * Creates new form Frmcliente
      */
     private DefaultTableModel dtm;
-    private Object[] cliente = new Object[5];
+    private Object[] clientes = new Object[5];
     private int filaSeleccionada;
     
     public Frmcliente() {
@@ -29,7 +29,6 @@ public class Frmcliente extends javax.swing.JFrame {
         dtm = (DefaultTableModel) tabla.getModel();
         cargarclientes();
         cargar.setEnabled(true);
-        txtnombre.setEditable(false);
         
           this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -276,9 +275,8 @@ public class Frmcliente extends javax.swing.JFrame {
         cliente[4] = txtusername.getText();
         cliente[5] = txtclave.getText();
 
-        dtm.addRow(cliente);
+        dtm.addRow(clientes);
 
-        // Limpiar los campos
         txtnombre.setText("");
         txtapellido.setText("");
         txtemail.setText("");
