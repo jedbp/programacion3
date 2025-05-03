@@ -1,2 +1,0 @@
-# programacion3
-A
