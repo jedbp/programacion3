@@ -6,7 +6,6 @@ package clases;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  *
@@ -70,37 +69,42 @@ public class Usuarios {
         }
     }
     
-    public class ValidarUsuario {
+    public ResultSet listarUsuarios() {
+        Conector db = new Conector();
+        ResultSet rs = null;
 
-        public static boolean validarUsuario(String username, String clave) {
-            // Simulamos un usuario en base de datos
-            String usuarioValido = "jedabep";
-            String claveValida = "1234";
-
-            return username.equals(usuarioValido) && clave.equals(claveValida);
+        try {
+            db.conectar();
+            String query = "SELECT * FROM usuario";
+            rs = db.executeSelect(query);
+        } catch (SQLException e) {
+            System.err.println("Error al listar los usuarios: " + e.getMessage());
         }
+
+        return rs;
     }
-    
-    public class RegistroUsuarios {
-
-    private static ArrayList<Usuarios> usuariosRegistrados = new ArrayList<>();
-
-        public static void registrarUsuario(String nombre, String email, String username, String clave) {
-            Usuarios nuevoUsuario = new Usuarios();
-            usuariosRegistrados.add(nuevoUsuario);
-            System.out.println("Usuario registrado correctamente.");
-        }
-
-    // Método para ver usuarios registrados (opcional para pruebas)
-        public static ArrayList<Usuarios> getUsuariosRegistrados() {
-            return usuariosRegistrados;
-        }
-    }
-    
-    public int guardarcliente(String nombre, String email, String username, String clave)throws SQLException{
+   
+    // Método para insertar un nuevo cliente en la base de datos
+    public int guardarUsuario(String nombre, String apellido, String username, String email, String clave) throws SQLException {
         Conector db = new Conector();
         db.conectar();
-        String query = "INSERT INTO clientes(nombre,email,username,clave) VALUES(?,?,?,?)";
-        return db.executeUpdate(query,nombre,email,username,clave);
+        String query = "INSERT INTO usuario (nombre, apellido, username, email, clave) VALUES (?, ?, ?, ?, ?)";
+        return db.executeUpdate(query, nombre, apellido, username, email, clave);
     }
+
+    // Método para actualizar un cliente existente en la base de datos
+    public int actualizarUsuario(int id,String nombre, String apellido, String username, String email, String clave) throws SQLException {
+        Conector db = new Conector();
+        db.conectar();
+        String query = "UPDATE usuario SET nombre = ?, apellido = ?, email = ?, username = ?, clave = ? WHERE id = ?";
+        return db.executeUpdate(query, nombre, apellido, username, email, clave, id);
+    }
+
+    // Método para eliminar un cliente de la base de datos
+    public int eliminarUsuario(int id) throws SQLException {
+        Conector db = new Conector();
+        db.conectar();
+        String query = "DELETE FROM usuario WHERE id = ?";
+        return db.executeUpdate(query, id);
+    } 
 }
